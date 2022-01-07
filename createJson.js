@@ -9,7 +9,7 @@ async function createJson() {
     try {
         const readInterface = readline.createInterface({
             input: fs.createReadStream(wordsPath),
-            output: process.stdout,
+            output: false,
             console: false
         })
 
@@ -22,7 +22,6 @@ async function createJson() {
         fs.writeFile('wordsParsed.json', JSON.stringify(wordsArray), (err) => {
             if(err) throw err
 
-            console.log('ok')
         })
     } catch(e) {
         console.log(e)

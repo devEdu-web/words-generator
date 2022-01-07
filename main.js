@@ -10,22 +10,23 @@ const existFile = fs.existsSync(wordsParsedPath)
 async function init() {
 
     if(existFile) {
-        const words = await getWords()
-        console.log(words)
+        getWords(words => {
+            console.log(words)
+        })
     } else {
         await createJson()
-        const words = await getWords()
-        console.log(words)
+        getWords(words => {
+            console.log(words)
+        })
     }
 
 
 }
 
-function getWords(arr) {
-
-    return new Promise((resolve, reject) => {
+function getWords(callback) {
 
         fs.readFile(wordsParsedPath, 'utf8', (err, data) => {
+    
             const wordsParsed = JSON.parse(data)
             const words = []
             
@@ -35,22 +36,20 @@ function getWords(arr) {
                 wordsParsed.words.splice(randomNumber, 1)
     
             }
-
+    
             fs.writeFile('wordsParsed.json', JSON.stringify(wordsParsed), (err) => {
                 if(err) throw err
             })
             
-            console.log(wordsParsed.words.length)
+            callback({
+                wordsRemaining: wordsParsed.words.length,
+                words: words
+            })
+    
+            // console.log(wordsParsed.words.length)
 
-            if(wordsParsed && words) {
-                resolve(words)
-            } else {
-                reject(err)
-            }
     
         })
-    })
-
 
 
 }
