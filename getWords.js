@@ -23,11 +23,6 @@ function getWords() {
                 wordsRemaining: wordsParsed.words.length,
                 words,
             })
-
-            // callback({
-            //     wordsRemaining: wordsParsed.words.length,
-            //     words: words,
-            // });
         });
     }) 
 }
