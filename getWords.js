@@ -8,9 +8,9 @@ function getWords() {
         fs.readFile(wordsParsedPath, "utf8", (err, data) => {
             const wordsParsed = JSON.parse(data);
             const words = [];
-    
+            console.log(wordsParsed.words.length)
             for (let i = 0; i < 10; i++) {
-                const randomNumber = Math.ceil(Math.random() * 58112 - 1);
+                const randomNumber = Math.ceil(Math.random() * wordsParsed.words.length);
                 words.push(wordsParsed.words[randomNumber]);
                 wordsParsed.words.splice(randomNumber, 1);
             }
