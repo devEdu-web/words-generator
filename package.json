@@ -1,0 +1,25 @@
+{
+  "name": "wgen",
+  "version": "1.0.0",
+  "description": "",
+  "main": "main.js",
+  "preferGlobal": true,
+  "bin": "./commands.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/devEdu-web/words-generator.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/devEdu-web/words-generator/issues"
+  },
+  "homepage": "https://github.com/devEdu-web/words-generator#readme",
+  "dependencies": {
+    "commander": "^9.2.0"
+  }
+}
