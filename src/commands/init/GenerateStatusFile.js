@@ -2,12 +2,13 @@ const fs = require('fs/promises');
 const config = require('../../config/default.js');
 
 module.exports = class GenerateStatusFile {
+  constructor(ReadFile, WriteFile){
+    this.ReadFile = ReadFile
+    this.WriteFile = WriteFile
+  }
   async generate() {
     try {
-      const dataset = await fs.readFile(
-        `${config.configPath}/wgen/dataset.json`,
-        { encoding: 'utf-8' }
-      );
+      const dataset = await this.ReadFile.read(`${config.configPath}/wgen/dataset.json`)
       const datasetLength = JSON.parse(dataset)[0].length;
 
       const statusTemplate = JSON.stringify({
@@ -16,19 +17,13 @@ module.exports = class GenerateStatusFile {
         wordsGenerated: 0,
       });
 
-      await fs.writeFile(
-        `${config.configPath}/wgen/status.json`,
-        statusTemplate
-      );
+      await this.WriteFile.write(`${config.configPath}/wgen/status.json`, statusTemplate)
 
       return {
         error: false,
       };
     } catch (error) {
-      return {
-        error: true,
-        message: error.message,
-      };
+      throw new Error(error.message)
     }
   }
 }

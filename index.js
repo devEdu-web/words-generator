@@ -24,6 +24,7 @@ program
       await init.execute()
       console.log('Config folder created.')
     } catch (error) {
+      console.log(error)
       console.log('File already exists.')
     }
   })
