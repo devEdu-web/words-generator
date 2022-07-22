@@ -13,6 +13,7 @@
 const { program } = require('commander')
 const package = require('./package.json');
 const init = require('./src/commands/init/index')
+const getStatus = require('./src/commands/status/index')
 
 program.version(package.version);
 
@@ -26,6 +27,18 @@ program
     } catch (error) {
       console.log(error)
       console.log('File already exists.')
+    }
+  })
+
+program
+  .command('status')
+  .description('Return user status.')
+  .action(async () => {
+    try {
+      const status = await getStatus.execute()
+      console.log(status)
+    } catch (error) {
+      console.log(error.message)
     }
   })
 
