@@ -3,17 +3,16 @@
 // wgen generate { quantity }
   // generate the amount of words specified - default 10, limit 100
 
-// wgen status
-  // return the amount of words generated in total
-  // return the amount of words left in the dataset
 
 // wgen add { word, phrasal verb, expression }
   // add a personalized word, phrasal verb, expression into dataset
 
 const { program } = require('commander')
 const package = require('./package.json');
+
 const init = require('./src/commands/init/index')
 const getStatus = require('./src/commands/status/index')
+const add = require('./src/commands/add/index')
 
 program.version(package.version);
 
@@ -41,5 +40,20 @@ program
       console.log(error.message)
     }
   })
+
+program
+  .command('add')
+  .description('Add passed word, phrasal verb or expressions to dataset. If it is more than one word, must be inside quotes.')
+  .argument('<payload>', 'data to add into dataset')
+  .action(async payload => {
+    try {
+      await add.execute(1, payload)
+      console.log('done')
+    } catch (error) {
+      console.log(error)
+    }
+    
+  })
+
 
 program.parse(process.argv)
