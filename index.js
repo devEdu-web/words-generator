@@ -58,9 +58,12 @@ program
   .argument('<amount>', 'Amount of words to be generated.')
   .action(async (amount) => {
     try {
+      if(amount > 100) {
+        throw new Error('Max amount is 100.')
+      }
       await generate.generate(Number(amount))
     } catch (error) {
-      console.log(error)
+      console.log(error.message)
     }
   })
 
