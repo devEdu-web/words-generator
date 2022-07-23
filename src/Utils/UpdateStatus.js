@@ -8,7 +8,6 @@ module.exports = class UpdateStatus {
 
   async addingWord(amount) { 
     try {
-      console.log(amount)
       const status = await this.readFile.read(`${config.configPath}/wgen/status.json`)
       const statusParsed = JSON.parse(status)
 
@@ -18,12 +17,24 @@ module.exports = class UpdateStatus {
       await this.writeFile.write(`${config.configPath}/wgen/status.json`, JSON.stringify(statusParsed))
 
     } catch (error) {
-      console.log(error)
+      throw new Error(error.message)
     }
   }
 
   async removingWord(amount) {
+    try {
+      const status = await this.readFile.read(`${config.configPath}/wgen/status.json`)
+      let statusParsed = JSON.parse(status)
 
+      statusParsed.remainingWords -= amount
+      statusParsed.wordsGenerated += amount
+      
+
+      await this.writeFile.write(`${config.configPath}/wgen/status.json`, JSON.stringify(statusParsed))
+
+    } catch (error) {
+      throw new Error(error.message)
+    }
   }
 
 }

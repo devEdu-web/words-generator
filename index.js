@@ -3,16 +3,13 @@
 // wgen generate { quantity }
   // generate the amount of words specified - default 10, limit 100
 
-
-// wgen add { word, phrasal verb, expression }
-  // add a personalized word, phrasal verb, expression into dataset
-
 const { program } = require('commander')
 const package = require('./package.json');
 
 const init = require('./src/commands/init/index')
 const getStatus = require('./src/commands/status/index')
 const add = require('./src/commands/add/index')
+const generate = require('./src/commands/generate/index')
 
 program.version(package.version);
 
@@ -55,5 +52,16 @@ program
     
   })
 
+program
+  .command('generate')
+  .description('Generate random words.')
+  .argument('<amount>', 'Amount of words to be generated.')
+  .action(async (amount) => {
+    try {
+      await generate.generate(Number(amount))
+    } catch (error) {
+      console.log(error)
+    }
+  })
 
 program.parse(process.argv)

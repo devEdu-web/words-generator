@@ -7,7 +7,6 @@ module.exports = class UpdateDataset {
   }
 
   async addingWord(payload) { 
-    console.log('payload', payload)
     try {
       const dataset = await this.readFile.read(`${config.configPath}/wgen/dataset.json`)
       const datasetParsed = JSON.parse(dataset)
@@ -17,12 +16,25 @@ module.exports = class UpdateDataset {
       await this.writeFile.write(`${config.configPath}/wgen/dataset.json`, JSON.stringify(datasetParsed))
 
     } catch (error) {
-      console.log(error)
+      throw new Error(error.message)
     }
   }
 
-  async removingWord(amount) {
+  async removingWord(word) {
+    try {
+      const dataset = await this.readFile.read(`${config.configPath}/wgen/dataset.json`)
+      const datasetParsed = JSON.parse(dataset)
 
+      const wordIndex = datasetParsed[0].indexOf(word)
+      if(wordIndex > 0) {
+        datasetParsed[0].splice(wordIndex, 1)
+      }
+
+      await this.writeFile.write(`${config.configPath}/wgen/dataset.json`, JSON.stringify(datasetParsed))
+
+    } catch (error) {
+      throw new Error(error.message)
+    }
   }
 
 }
